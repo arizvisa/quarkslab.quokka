@@ -52,6 +52,8 @@ find_path(IdaSdk_DIR NAMES include/pro.h
 set(IdaSdk_INCLUDE_DIRS ${IdaSdk_DIR}/include)
 set(IdaSdk_MODULE_DIRS ${IdaSdk_DIR}/module)
 
+set(EA64 ON CACHE BOOL "64-bits addressing")
+
 find_package_handle_standard_args(
         IdaSdk FOUND_VAR IdaSdk_FOUND
         REQUIRED_VARS IdaSdk_DIR
@@ -71,7 +73,12 @@ else ()
 endif ()
 
 if (UNIX)
-    set(IdaLib ${IdaSdk_DIR}/lib/x64_linux_gcc_64/libida64.so)
+    if (${EA64})
+        set(IdaLib ${IdaSdk_DIR}/lib/x64_linux_gcc_64/libida64.so)
+    else ()
+        set(IdaLib ${IdaSdk_DIR}/lib/x64_linux_gcc_32/libida.so)
+    endif ()
+
     if (APPLE)
         set(IdaSdk_PLATFORM __MAC__)
     else ()
@@ -108,10 +115,15 @@ endif ()
 function(ida_common_target_settings t)
     # Add the necessary __IDP__ define and allow to use "dangerous" and standard
     # file functions.
-    target_compile_definitions(${t} PUBLIC
-            ${IdaSdk_PLATFORM} __X64__ __IDP__ USE_DANGEROUS_FUNCTIONS
-            USE_STANDARD_FILE_FUNCTIONS __EA64__)
-
+    if (${EA64})
+        target_compile_definitions(${t} PUBLIC
+                ${IdaSdk_PLATFORM} __X64__ __IDP__ USE_DANGEROUS_FUNCTIONS
+                USE_STANDARD_FILE_FUNCTIONS __EA64__)
+    else ()
+        target_compile_definitions(${t} PUBLIC
+                ${IdaSdk_PLATFORM} __X64__ __IDP__ USE_DANGEROUS_FUNCTIONS
+                USE_STANDARD_FILE_FUNCTIONS)
+    endif ()
     target_include_directories(${t} PUBLIC ${IdaSdk_INCLUDE_DIRS})
 endfunction()
 
@@ -121,9 +133,15 @@ function(_ida_plugin name link_script)  # ARGN contains sources
     ida_common_target_settings(${name})
 
     # Rename the plugin to have the proper naming scheme for IDA
-    set_target_properties(${name} PROPERTIES
-            PREFIX ""
-            OUTPUT_NAME ${name}${PROJECT_VERSION_MAJOR}${PROJECT_VERSION_MINOR}64)
+    if (${EA64})
+        set_target_properties(${name} PROPERTIES
+                PREFIX ""
+                OUTPUT_NAME ${name}${PROJECT_VERSION_MAJOR}${PROJECT_VERSION_MINOR}64)
+    else ()
+        set_target_properties(${name} PROPERTIES
+                PREFIX ""
+                OUTPUT_NAME ${name}${PROJECT_VERSION_MAJOR}${PROJECT_VERSION_MINOR}32)
+    endif ()
 
     if (UNIX)
         if (APPLE)
