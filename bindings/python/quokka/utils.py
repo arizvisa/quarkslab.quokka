@@ -124,6 +124,8 @@ def convert_address_size(
         return 32
     if proto_address_size == quokka.pb.Quokka.ADDR_64:
         return 64
+    if proto_address_size == quokka.pb.Quokka.ADDR_16:
+        return 16
 
     raise ValueError("Address size not known")
 

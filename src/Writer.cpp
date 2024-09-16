@@ -540,6 +540,8 @@ quokka::Quokka::AddressSize ToProtoAddressSize(AddressSize addr_size) {
       return quokka::Quokka::ADDR_64;
     case ADDR_32:
       return quokka::Quokka::ADDR_32;
+    case ADDR_16:
+      return quokka::Quokka::ADDR_16;
     default:
       return quokka::Quokka::ADDR_UNK;
   }

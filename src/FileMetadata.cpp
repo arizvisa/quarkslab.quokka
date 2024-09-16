@@ -61,6 +61,7 @@ void Metadata::SetEndianness() {
 }
 
 void Metadata::SetAddressSize() {
+  size_t ft = getinf(INF_FILETYPE);
   if (inf_is_64bit()) {
     this->address_size = ADDR_64;
 #if IDA_SDK_VERSION >= 760
@@ -69,6 +70,9 @@ void Metadata::SetAddressSize() {
   } else if (inf_is_32bit()) {
 #endif
     this->address_size = ADDR_32;
+  } else if (ft == f_EXE_old || ft == f_COM_old ||
+             ft == f_EXE || ft == f_COM) {
+    this->address_size = ADDR_16;
   } else {
     this->address_size = ADDR_UNK;
   }

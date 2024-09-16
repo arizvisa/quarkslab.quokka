@@ -66,6 +66,7 @@ enum AddressSize : short {
   ADDR_UNK = 0,
   ADDR_64,
   ADDR_32,
+  ADDR_16,
 };
 
 /**

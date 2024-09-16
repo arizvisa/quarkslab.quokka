@@ -79,6 +79,7 @@ class AddressSize(enum.Enum):
     ) -> "AddressSize":
         """Convert the protobuf value into this enumeration"""
         mapping = {
+            quokka.pb.Quokka.ADDR_16: AddressSize.ADDRESS_16,
             quokka.pb.Quokka.ADDR_32: AddressSize.ADDRESS_32,
             quokka.pb.Quokka.ADDR_64: AddressSize.ADDRESS_64,
         }

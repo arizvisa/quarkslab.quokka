@@ -17,6 +17,7 @@ message Quokka {
     ADDR_UNK = 0;
     ADDR_32 = 1;
     ADDR_64 = 2;
+    ADDR_16 = 3;
   }
 
   message Meta {

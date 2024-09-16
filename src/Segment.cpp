@@ -58,6 +58,8 @@ Segment::Segment(segment_t* segment) {
     address_size = ADDR_64;
   } else if (segment->is_32bit()) {
     address_size = ADDR_32;
+  } else if (segment->is_16bit()) {
+    address_size = ADDR_16;
   } else {
     address_size = ADDR_UNK;
   }
@@ -67,6 +69,8 @@ Segment::Segment(segment_t* segment) {
     address_size = ADDR_64;
   } else if (segment->use32()) {
     address_size = ADDR_32;
+  } else if (segment->bitness == 0) {
+    address_size = ADDR_16;
   } else {
     address_size = ADDR_UNK;
   }
