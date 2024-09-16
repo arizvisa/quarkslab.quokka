@@ -19,6 +19,7 @@ This module contain some utilities function to manipulate the binaries.
 from quokka.analysis.arch import (
     QuokkaArch,
     ArchEnum,
+    Arch8086,
     ArchX86,
     ArchX64,
     ArchARM,

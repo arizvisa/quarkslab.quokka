@@ -113,6 +113,16 @@ class ArchX64(ArchX86):  # type: ignore
     inst_pointer = ArchX86.regs.RIP
 
 
+class Arch8086(ArchX86):  # type: ignore
+    """Arch 8086 (16-bit) definition"""
+
+    address_size = 16
+
+    frame_pointer = ArchX86.regs.BP
+    stack_pointer = ArchX86.regs.SP
+    inst_pointer = ArchX86.regs.IP
+
+
 class ArchARM(QuokkaArch):  # type: ignore
     """ArchARM definition"""
 

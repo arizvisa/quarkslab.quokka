@@ -28,6 +28,7 @@ from quokka.analysis import (
     ArchEnum,
     ArchX86,
     ArchX64,
+    Arch8086,
     ArchARM,
     ArchARM64,
     ArchARMThumb,
@@ -150,6 +151,7 @@ def get_arch(
             64: ArchARM64,
         },
         ArchEnum.X86: {
+            16: Arch8086,
             32: ArchX86,
             64: ArchX64,
         },

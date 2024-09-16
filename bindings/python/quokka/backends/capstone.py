@@ -45,6 +45,7 @@ def get_capstone_context(
     mapping = {
         quokka.analysis.ArchARM: (capstone.CS_ARCH_ARM, capstone.CS_MODE_ARM),
         quokka.analysis.ArchARM64: (capstone.CS_ARCH_ARM64, capstone.CS_MODE_ARM),
+        quokka.analysis.Arch8086: (capstone.CS_ARCH_X86, capstone.CS_MODE_16),
         quokka.analysis.ArchX86: (capstone.CS_ARCH_X86, capstone.CS_MODE_32),
         quokka.analysis.ArchX64: (capstone.CS_ARCH_X86, capstone.CS_MODE_64),
         quokka.analysis.ArchARMThumb: (
